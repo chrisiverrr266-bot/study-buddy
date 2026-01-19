@@ -3,367 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Study Buddy - Learn coding from basics to expert level. All programming languages in one place.">
-    <title>Study Buddy - Master Coding from Basics to Expert</title>
+    <title>Study Buddy - Interactive Coding Lessons</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
                 <div class="logo">
-                    <span class="logo-icon">🎓</span>
+                    <span class="logo-icon">💻</span>
                     <span class="logo-text">Study Buddy</span>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#home" class="nav-link active">Home</a></li>
-                    <li><a href="#languages" class="nav-link">Languages</a></li>
-                    <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                </ul>
+                <button class="sidebar-toggle" id="sidebarToggle">✕</button>
+            </div>
+
+            <div class="language-selector">
+                <select id="languageSelect" class="language-dropdown">
+                    <option value="python">🐍 Python</option>
+                    <option value="javascript">🟨 JavaScript</option>
+                    <option value="java">☕ Java</option>
+                    <option value="cpp">🔷 C++</option>
+                    <option value="csharp">💠 C#</option>
+                    <option value="html">🌐 HTML/CSS</option>
+                </select>
+            </div>
+
+            <nav class="lesson-nav" id="lessonNav">
+                <!-- Dynamically populated -->
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="progress-widget">
+                    <p class="progress-label">Course Progress</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">0% Complete</p>
+                </div>
+                <p class="creator">Made by <strong>Chris Iver</strong></p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">🚀 Your Journey to Coding Mastery</div>
-                <h1 class="hero-title">
-                    Master <span class="gradient-text">Every Programming Language</span>
-                    <br>From Basics to Expert
-                </h1>
-                <p class="hero-description">
-                    Comprehensive tutorials, interactive examples, and structured learning paths for all skill levels. Start your coding journey today.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#languages" class="btn btn-primary">Start Learning</a>
-                    <a href="#roadmap" class="btn btn-secondary">View Roadmap</a>
+                <div class="breadcrumb" id="breadcrumb">Python / Getting Started</div>
+                <div class="top-actions">
+                    <button class="action-btn" id="resetProgressBtn" title="Reset Progress">🔄</button>
+                    <button class="action-btn" id="themeToggle" title="Toggle Theme">🌙</button>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">Languages</div>
+            </header>
+
+            <div class="content-wrapper">
+                <article class="lesson-content" id="lessonContent">
+                    <!-- Dynamically loaded lesson content -->
+                </article>
+
+                <div class="code-playground" id="codePlayground">
+                    <div class="playground-header">
+                        <span class="playground-title">💡 Try It Yourself</span>
+                        <div class="playground-actions">
+                            <button class="playground-btn" id="runCodeBtn">▶ Run Code</button>
+                            <button class="playground-btn secondary" id="resetCodeBtn">Reset</button>
+                        </div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Tutorials</div>
+                    <div class="code-editor">
+                        <textarea id="codeEditor" spellcheck="false"></textarea>
+                        <pre id="codeHighlight"><code class="language-python"></code></pre>
                     </div>
-                    <div class="stat">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Free</div>
+                    <div class="output-panel">
+                        <div class="output-header">Output:</div>
+                        <pre id="outputDisplay"></pre>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Languages Section -->
-    <section id="languages" class="languages">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Choose Your Language</h2>
-                <p class="section-description">Select from popular programming languages and start learning with structured paths</p>
-            </div>
-            <div class="language-grid">
-                <div class="language-card" data-language="python">
-                    <div class="language-icon">🐍</div>
-                    <h3 class="language-name">Python</h3>
-                    <p class="language-description">Perfect for beginners, powerful for pros. Data science, AI, and web development.</p>
-                    <div class="language-meta">
-                        <span class="difficulty beginner">Beginner Friendly</span>
-                        <span class="lessons">80+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="javascript">
-                    <div class="language-icon">🟨</div>
-                    <h3 class="language-name">JavaScript</h3>
-                    <p class="language-description">Power the web with interactive features. Frontend, backend, and mobile apps.</p>
-                    <div class="language-meta">
-                        <span class="difficulty beginner">Beginner Friendly</span>
-                        <span class="lessons">100+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="java">
-                    <div class="language-icon">☕</div>
-                    <h3 class="language-name">Java</h3>
-                    <p class="language-description">Enterprise applications and Android development. Write once, run anywhere.</p>
-                    <div class="language-meta">
-                        <span class="difficulty intermediate">Intermediate</span>
-                        <span class="lessons">90+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="cpp">
-                    <div class="language-icon">🟦</div>
-                    <h3 class="language-name">C++</h3>
-                    <p class="language-description">High-performance computing, game development, and system programming.</p>
-                    <div class="language-meta">
-                        <span class="difficulty advanced">Advanced</span>
-                        <span class="lessons">75+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="csharp">
-                    <div class="language-icon">🟦</div>
-                    <h3 class="language-name">C#</h3>
-                    <p class="language-description">Microsoft ecosystem, game dev with Unity, and enterprise applications.</p>
-                    <div class="language-meta">
-                        <span class="difficulty intermediate">Intermediate</span>
-                        <span class="lessons">70+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="go">
-                    <div class="language-icon">🐹</div>
-                    <h3 class="language-name">Go</h3>
-                    <p class="language-description">Modern backend development, cloud services, and concurrent programming.</p>
-                    <div class="language-meta">
-                        <span class="difficulty intermediate">Intermediate</span>
-                        <span class="lessons">60+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="rust">
-                    <div class="language-icon">🦀</div>
-                    <h3 class="language-name">Rust</h3>
-                    <p class="language-description">Memory-safe systems programming without garbage collection.</p>
-                    <div class="language-meta">
-                        <span class="difficulty advanced">Advanced</span>
-                        <span class="lessons">55+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="kotlin">
-                    <div class="language-icon">🧡</div>
-                    <h3 class="language-name">Kotlin</h3>
-                    <p class="language-description">Modern Android development and JVM applications.</p>
-                    <div class="language-meta">
-                        <span class="difficulty intermediate">Intermediate</span>
-                        <span class="lessons">65+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="swift">
-                    <div class="language-icon">🦦</div>
-                    <h3 class="language-name">Swift</h3>
-                    <p class="language-description">iOS and macOS app development with Apple's modern language.</p>
-                    <div class="language-meta">
-                        <span class="difficulty intermediate">Intermediate</span>
-                        <span class="lessons">70+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="typescript">
-                    <div class="language-icon">🔷</div>
-                    <h3 class="language-name">TypeScript</h3>
-                    <p class="language-description">JavaScript with types for scalable application development.</p>
-                    <div class="language-meta">
-                        <span class="difficulty intermediate">Intermediate</span>
-                        <span class="lessons">85+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="php">
-                    <div class="language-icon">🐘</div>
-                    <h3 class="language-name">PHP</h3>
-                    <p class="language-description">Server-side web development and content management systems.</p>
-                    <div class="language-meta">
-                        <span class="difficulty beginner">Beginner Friendly</span>
-                        <span class="lessons">75+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
-                </div>
-
-                <div class="language-card" data-language="ruby">
-                    <div class="language-icon">💎</div>
-                    <h3 class="language-name">Ruby</h3>
-                    <p class="language-description">Elegant web development with Rails framework.</p>
-                    <div class="language-meta">
-                        <span class="difficulty beginner">Beginner Friendly</span>
-                        <span class="lessons">65+ Lessons</span>
-                    </div>
-                    <button class="btn btn-outline">Start Learning</button>
+                <div class="lesson-navigation">
+                    <button class="nav-btn" id="prevLessonBtn" disabled>
+                        ← Previous Lesson
+                    </button>
+                    <button class="nav-btn primary" id="nextLessonBtn">
+                        Next Lesson →
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
+        </main>
+    </div>
 
-    <!-- Learning Roadmap -->
-    <section id="roadmap" class="roadmap">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Your Learning Path</h2>
-                <p class="section-description">Follow our structured approach from beginner to expert</p>
-            </div>
-            <div class="roadmap-container">
-                <div class="roadmap-item">
-                    <div class="roadmap-number">01</div>
-                    <div class="roadmap-content">
-                        <h3 class="roadmap-title">Fundamentals</h3>
-                        <p class="roadmap-description">Learn syntax, variables, data types, and basic operations. Build your foundation with practical examples.</p>
-                        <ul class="roadmap-topics">
-                            <li>Variables & Data Types</li>
-                            <li>Operators & Expressions</li>
-                            <li>Control Flow</li>
-                            <li>Functions & Methods</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="roadmap-item">
-                    <div class="roadmap-number">02</div>
-                    <div class="roadmap-content">
-                        <h3 class="roadmap-title">Intermediate Concepts</h3>
-                        <p class="roadmap-description">Master OOP, data structures, and algorithms. Write efficient and maintainable code.</p>
-                        <ul class="roadmap-topics">
-                            <li>Object-Oriented Programming</li>
-                            <li>Arrays & Collections</li>
-                            <li>Common Algorithms</li>
-                            <li>Error Handling</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="roadmap-item">
-                    <div class="roadmap-number">03</div>
-                    <div class="roadmap-content">
-                        <h3 class="roadmap-title">Advanced Topics</h3>
-                        <p class="roadmap-description">Dive into design patterns, concurrency, and advanced architectures.</p>
-                        <ul class="roadmap-topics">
-                            <li>Design Patterns</li>
-                            <li>Multithreading & Async</li>
-                            <li>Testing & Debugging</li>
-                            <li>Performance Optimization</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="roadmap-item">
-                    <div class="roadmap-number">04</div>
-                    <div class="roadmap-content">
-                        <h3 class="roadmap-title">Expert Level</h3>
-                        <p class="roadmap-description">Build production-ready applications with best practices and industry standards.</p>
-                        <ul class="roadmap-topics">
-                            <li>System Design</li>
-                            <li>Microservices & APIs</li>
-                            <li>Cloud Deployment</li>
-                            <li>Security Best Practices</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">About Study Buddy</h2>
-                    <p>Study Buddy is a comprehensive coding education platform designed to take you from absolute beginner to expert developer. Our mission is to make quality programming education accessible to everyone, completely free.</p>
-                    <p>Whether you're learning your first programming language or adding another skill to your toolkit, Study Buddy provides structured learning paths, practical examples, and hands-on exercises to accelerate your journey.</p>
-                    <div class="creator-info">
-                        <p class="creator-label">Created by</p>
-                        <p class="creator-name">Chris Iver</p>
-                    </div>
-                </div>
-                <div class="about-features">
-                    <div class="feature">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Structured Learning</h3>
-                        <p>Follow clear paths from basics to advanced topics</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">💻</div>
-                        <h3>Practical Examples</h3>
-                        <p>Learn by doing with real-world code samples</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🚀</div>
-                        <h3>Self-Paced</h3>
-                        <p>Learn at your own speed, anytime, anywhere</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🌐</div>
-                        <h3>Always Free</h3>
-                        <p>Quality education accessible to everyone</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <span class="logo-icon">🎓</span>
-                        <span class="logo-text">Study Buddy</span>
-                    </div>
-                    <p class="footer-description">Master coding from basics to expert. All languages, one platform.</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-section">
-                        <h4>Learn</h4>
-                        <ul>
-                            <li><a href="#languages">All Languages</a></li>
-                            <li><a href="#roadmap">Learning Roadmap</a></li>
-                            <li><a href="#">Tutorials</a></li>
-                            <li><a href="#">Examples</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">Cheat Sheets</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Community</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Connect</h4>
-                        <ul>
-                            <li><a href="https://github.com/chrisiverrr266-bot" target="_blank">GitHub</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Discord</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Study Buddy. Created by Chris Iver. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="lessons.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
